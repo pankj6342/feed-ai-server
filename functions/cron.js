@@ -1,3 +1,3 @@
-const { scheduleEmails } = require("../server/email");
+const { scheduleEmails } = require("../email");
 
 scheduleEmails();
