@@ -9,7 +9,7 @@ const {
   createPost,
   createAndAddPostToTopic,
 } = require("./controller/postController");
-const emailTemplate = fs.readFileSync("./emailTemplate.html", "utf8");
+const { emailTemplate } = require("./emailTemplate");
 
 const production_api = process.env.production_api;
 const dummy_api = process.env.dummy_api;
