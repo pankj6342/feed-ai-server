@@ -9,6 +9,6 @@
   to = "/.netlify/functions/cron"
   status = 200
 
-[[functions]]
+  # Cron trigger for the function (within the same [functions] section)
   runtime = "nodejs16"  # Adjust runtime if needed
   schedule = "@hourly"  # Replace with desired schedule
