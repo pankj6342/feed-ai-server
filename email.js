@@ -12,10 +12,8 @@ const {
 const emailTemplate = fs.readFileSync("./emailTemplate.html", "utf8");
 
 const production_api = process.env.production_api;
-  // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTJlZWUyMjAtMWJkMy00MWMzLWE3ZjEtNTI1OThmNjNiZjg4IiwidHlwZSI6ImFwaV90b2tlbiJ9.MvdyCrNLRlCMq7rEGdEa9dxJpD2gDamY_RCmvORR4oY";
 const dummy_api = process.env.dummy_api;
-  // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiZTJlZWUyMjAtMWJkMy00MWMzLWE3ZjEtNTI1OThmNjNiZjg4IiwidHlwZSI6InNhbmRib3hfYXBpX3Rva2VuIn0.WcEOEr1VkUGUSRRM8cCH6TOuCjDy0WdR1u1otpBRTiU";
-
+ 
 const generateAnswer = async (question) => {
   const options = {
     method: "POST",
@@ -53,8 +51,8 @@ const sendEmailHelper = (emailSubject, emailBody, subscribers) => {
       host: "smtp.gmail.com",
       port: 587,
       auth: {
-        user: "2pankajbhardwaj@gmail.com",
-        pass: "jifi xxdm dbgn wxfj",
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
       },
     });
 
