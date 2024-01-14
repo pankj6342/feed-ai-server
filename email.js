@@ -103,7 +103,7 @@ module.exports.createAndSendEmails = async () => {
     for (const topic of topics) {
       const title = topic.title;
       // Delay execution for 5 seconds
-      await new Promise((resolve) => setTimeout(resolve, 10000));
+      // await new Promise((resolve) => setTimeout(resolve, 2));
     
       const { success, answer } = await generateAnswer(`Write a newsletter on ${title}`);
       if (!success) continue;
