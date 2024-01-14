@@ -7,6 +7,7 @@ const userRoute = require('./routes/userRoute');
 const topicRoute = require('./routes/topicRoute');
 const postRoute = require('./routes/postRoute');
 const connectToMongo = require('./db/connection')
+const { scheduleEmails, createAndSendEmails } = require('./email')
 require('dotenv').config({ path: '.env' });
 
 const app = express();
@@ -20,6 +21,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/user',userRoute);
 app.use('/api/topic', topicRoute);
 app.use('/api/post', postRoute);
+app.get('/cron_custom', (req, res)=>{
+  try {
+    createAndSendEmails();
+    res.send('Email send successfully');
+  } catch (error) {
+    console.log(error?.message);
+    res.send('Some error occurred');
+  }
+
+})
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

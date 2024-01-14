@@ -1,3 +1,8 @@
-const { scheduleEmails } = require("../email");
+const {createAndSendEmails } = require("../email");
 
-scheduleEmails();
+try {
+  createAndSendEmails();
+  console.log("Emails sent successfully");
+} catch (error) {
+  console.log("Some error occurred", error?.message);
+}

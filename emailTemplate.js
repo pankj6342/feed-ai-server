@@ -1,4 +1,4 @@
-export const emailTemplate = ` <html>
+const emailTemplate = ` <html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,3 +52,4 @@ export const emailTemplate = ` <html>
 </body>
 </html>
 `;
+module.exports = {emailTemplate}

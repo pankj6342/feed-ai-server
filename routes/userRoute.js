@@ -8,5 +8,5 @@ router.post('/login',userController.login);
 router.post('/confirmEmail',userController.confirmEmail);
 router.post('/sendEmail',userController.emailSend);
 router.get('/getPosts', userController.getAllPostsForUser);
-router.get('/getUserData', fetchuser, userController.getUserData);
+router.get('/getUserData', userController.getUserData);
 module.exports = router;

@@ -10,10 +10,11 @@ const {
   createAndAddPostToTopic,
 } = require("./controller/postController");
 const { emailTemplate } = require("./emailTemplate");
+require('dotenv').config({ path: '.env' });
 
 const production_api = process.env.production_api;
 const dummy_api = process.env.dummy_api;
- 
+
 const generateAnswer = async (question) => {
   const options = {
     method: "POST",
@@ -95,18 +96,27 @@ const sendEmailHelper = (emailSubject, emailBody, subscribers) => {
   }
 };
 
-const createAndSendEmails = async () => {
+module.exports.createAndSendEmails = async () => {
+  try {
     const topics = await Topic.find({});
     // console.log({ topics });
-  for (const topic of topics) {
-    const title = topic.title;
-    const { success, answer } = await generateAnswer(`Write a newsletter on ${title}`);
-    // console.log({ answer });
-    if (!success) continue;
-    await createAndAddPostToTopic(`Newsletter on ${title}`, answer, topic._id);
-    const subscribers = topic.subscribers;
-    const emailSubject = title;
-    sendEmailHelper(emailSubject, answer, subscribers);
+    for (const topic of topics) {
+      const title = topic.title;
+      // Delay execution for 5 seconds
+      await new Promise((resolve) => setTimeout(resolve, 10000));
+    
+      const { success, answer } = await generateAnswer(`Write a newsletter on ${title}`);
+      if (!success) continue;
+    
+      await createAndAddPostToTopic(`Newsletter on ${title}`, answer, topic._id);
+      const subscribers = topic.subscribers;
+      const emailSubject = title;
+      sendEmailHelper(emailSubject, answer, subscribers);
+    }
+    
+  } catch (error) {
+    console.log(error?.message);
+    throw error;
   }
 };
 
@@ -115,6 +125,7 @@ module.exports.scheduleEmails = () => {
     cron.schedule("* * * * *", () => createAndSendEmails());
   } catch (error) {
     console.log({ error });
+    throw error;
   }
 };
 

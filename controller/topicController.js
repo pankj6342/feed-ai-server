@@ -10,12 +10,12 @@ const createTopic = async (req, res) => {
       subscribers: [],
     });
     console.log("successfully created topic " + topic?.title);
-    res.json({
+    return res.json({
       success: true,
       message: "successfully created topic " + topic?.title,
     });
   } catch (error) {
-    res.json({
+    return res.json({
       success: false,
       message: "error in creating topic" + error?.message,
     });
@@ -28,10 +28,10 @@ const addPostToTopic = async (req, res) => {
     const topicId = req.body.topicId;
     const postId = req.body.postId;
     if (!topicId || !postId)
-      res.json({ success: false, message: `Invalid topicId/postId` });
+      return res.json({ success: false, message: `Invalid topicId/postId` });
     await Topic.updateOne({ _id: topicId }, { $push: { posts: postId } });
     console.log(`Post ${postId} added to topic ${topicId}`);
-    res.json({
+    return res.json({
       success: true,
       message: `Post ${postId} added to topic ${topicId}`,
     });
@@ -44,7 +44,7 @@ const addSubscriberToTopic = async (req, res) => {
   try {
     const { topicId, userId } = req.body;
     if (!topicId || !userId)
-      res.json({ sucess: false, message: "Invalid topicId/subscriberId" });
+      return res.json({ sucess: false, message: "Invalid topicId/subscriberId" });
     const {name, email} = await User.findById(userId);
     await Topic.updateOne({ _id: topicId }, { $push: { subscribers: {userId, name, email} } });
     await User.updateOne(
@@ -53,12 +53,12 @@ const addSubscriberToTopic = async (req, res) => {
     );
 
     // console.log(`User ${userId} added to topic ${topicId}`);
-    res.json({
+    return res.json({
       success: true,
       message: `User ${userId} added to topic ${topicId}`,
     });
   } catch (error) {
-    res.json({
+   return res.json({
       sucess: false,
       message: "Error in adding subscriber: " + error?.message,
     });
@@ -70,17 +70,17 @@ const removeSubscriberFromTopic = async (req, res) => {
   try {
     const { topicId, userId } = req.body;
     if (!topicId || !userId)
-      res.json({ sucess: false, message: "Invalid topicId/subscriberId" });
+      return res.json({ sucess: false, message: "Invalid topicId/subscriberId" });
     await Topic.updateOne({ _id: topicId }, { $pull: { subscribers: { userId: userId } } });
     await User.updateOne({ _id: userId }, { $pull: { subscriptions: topicId } });
     
     console.log(`User ${userId} removed from topic ${topicId}`);
-    res.json({
+    return res.json({
       success: true,
       message: `User ${userId} removed from topic ${topicId}`,
     });
   } catch (error) {
-    res.json({
+    return res.json({
       success: false,
       message: "Error in removing subscriber\n" + error?.message,
     });
