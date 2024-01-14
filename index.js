@@ -23,9 +23,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/user',userRoute);
 app.use('/api/topic', topicRoute);
 app.use('/api/post', postRoute);
-app.get('/cron_custom', (req, res)=>{
+app.get('/cron_custom', async (req, res)=>{
   try {
-    createAndSendEmails();
+    await createAndSendEmails();
     res.send('Email send successfully');
   } catch (error) {
     console.log(error?.message);
