@@ -1,5 +1,5 @@
-const Topic = require("../models/TopicSchema");
-const User = require("../models/UserSchema");
+import Topic from "../models/TopicSchema.js";
+import User from "../models/UserSchema.js";
 
 const createTopic = async (req, res) => {
   try {
@@ -97,4 +97,4 @@ const getAllTopics = async(req, res) => {
   }
 }
 
-module.exports = {createTopic, addPostToTopic, addSubscriberToTopic, removeSubscriberFromTopic, getAllTopics}
+export default {createTopic, addPostToTopic, addSubscriberToTopic, removeSubscriberFromTopic, getAllTopics}

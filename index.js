@@ -1,15 +1,13 @@
-const axios = require('axios')
-const express = require('express')
-const bodyParser = require('body-parser')
-const cors = require('cors')
-const mongoose = require('mongoose')
-const userRoute = require('./routes/userRoute');
-const topicRoute = require('./routes/topicRoute');
-const postRoute = require('./routes/postRoute');
-const connectToMongo = require('./db/connection')
-const { scheduleEmails, createAndSendEmails } = require('./email')
-require('dotenv').config({ path: '.env' });
+import express from 'express';
+import cors from 'cors';
+import userRoute from './routes/userRoute.js';
+import topicRoute from './routes/topicRoute.js';
+import postRoute from './routes/postRoute.js';
+import connectToMongo from './db/connection.js';
+import { scheduleEmails, createAndSendEmails } from './email.js';
+import dotenv from 'dotenv';
 
+dotenv.config({ path: '.env' }); // Load environment variables
 const app = express();
 const port = process.env.PORT;
 

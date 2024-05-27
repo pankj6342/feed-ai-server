@@ -1,9 +1,8 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const User = require("../models/UserSchema");
-const fetchuser = require("../middleware/fetchuser");
-const Topic = require("../models/TopicSchema");
-const Post = require("../models/PostSchema");
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../models/UserSchema.js";
+import Topic from "../models/TopicSchema.js";
+import Post from "../models/PostSchema.js";
 
 const JWT_SECRET = "JWT_$ECRET_$TRING";
 
@@ -175,6 +174,13 @@ const getUserData = async (req, res) => {
   } catch (error) {
     return res.json({success: false, error: error?.message})
   }
-}
-
-module.exports = { signup, confirmEmail, login, emailSend, getAllPostsForUser, getUserData};
+} 
+// module.exports = { signup, login, confirmEmail, emailSend, getAllPostsForUser, getUserData};
+export default {
+  signup,
+  confirmEmail,
+  login,
+  emailSend,
+  getAllPostsForUser,
+  getUserData
+};

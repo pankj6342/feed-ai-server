@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const connectToMongo = () => {
   const MONGO_URI = process.env.MONGO_URI;
@@ -13,4 +13,4 @@ const connectToMongo = () => {
   }
 }
 
-module.exports=connectToMongo;
+export default connectToMongo;

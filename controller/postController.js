@@ -1,5 +1,5 @@
-const Post = require('../models/PostSchema');
-const Topic = require('../models/TopicSchema');
+import Post from '../models/PostSchema.js';
+import Topic from '../models/TopicSchema.js';
 
 const createPost = async (req, res) => {
     try {
@@ -31,4 +31,4 @@ const createAndAddPostToTopic = async (postTitle, postBody, topicId)=>{
     }
 }
 
-module.exports = {createPost, createAndAddPostToTopic};
+export default {createPost, createAndAddPostToTopic};

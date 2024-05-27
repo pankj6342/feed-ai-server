@@ -52,4 +52,4 @@ const emailTemplate = ` <html>
 </body>
 </html>
 `;
-module.exports = {emailTemplate}
+export default emailTemplate;

@@ -1,16 +1,13 @@
-const fs = require("fs");
-const axios = require("axios");
-const cron = require("node-cron");
-const nodemailer = require("nodemailer");
-const handlebars = require("handlebars");
-const Topic = require("./models/TopicSchema");
-const { addPostToTopic } = require("./controller/topicController");
-const {
-  createPost,
-  createAndAddPostToTopic,
-} = require("./controller/postController");
-const { emailTemplate } = require("./emailTemplate");
-require('dotenv').config({ path: '.env' });
+import axios from "axios"
+import cron from "node-cron"
+import nodemailer from "nodemailer"
+import handlebars from "handlebars"
+import Topic from "./models/TopicSchema.js"
+import postController from "./controller/postController.js";
+import emailTemplate from "./emailTemplate.js"
+import dotenv from 'dotenv'
+
+dotenv.config({ path: '.env' }); // Load environment variables
 
 const production_api = process.env.production_api;
 const dummy_api = process.env.dummy_api;
@@ -96,7 +93,7 @@ const sendEmailHelper = (emailSubject, emailBody, subscribers) => {
   }
 };
 
-module.exports.createAndSendEmails = async () => {
+const createAndSendEmails = async () => {
   try {
     const topics = await Topic.find({});
     // console.log({ topics });
@@ -108,7 +105,7 @@ module.exports.createAndSendEmails = async () => {
       const { success, answer } = await generateAnswer(`Write a newsletter on ${title}`);
       if (!success) continue;
     
-      await createAndAddPostToTopic(`Newsletter on ${title}`, answer, topic._id);
+      await postController.createAndAddPostToTopic(`Newsletter on ${title}`, answer, topic._id);
       const subscribers = topic.subscribers;
       const emailSubject = title;
       sendEmailHelper(emailSubject, answer, subscribers);
@@ -120,7 +117,7 @@ module.exports.createAndSendEmails = async () => {
   }
 };
 
-module.exports.scheduleEmails = () => {
+const scheduleEmails = () => {
   try {
     cron.schedule("* * * * *", () => createAndSendEmails());
   } catch (error) {
@@ -129,4 +126,4 @@ module.exports.scheduleEmails = () => {
   }
 };
 
-// module.exports = {scheduleEmails};
+export {scheduleEmails, createAndSendEmails};
