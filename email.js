@@ -27,7 +27,7 @@ const generateAnswer = async (question) => {
       text: question,
       temperature: 0.2,
       max_tokens: 250,
-      fallback_providers: "",
+      fallback_providers: "openai",
     },
   };
   try {
@@ -103,7 +103,7 @@ module.exports.createAndSendEmails = async () => {
     for (const topic of topics) {
       const title = topic.title;
       // Delay execution for 5 seconds
-      // await new Promise((resolve) => setTimeout(resolve, 2));
+      await new Promise((resolve) => setTimeout(resolve, 5000));
     
       const { success, answer } = await generateAnswer(`Write a newsletter on ${title}`);
       if (!success) continue;
