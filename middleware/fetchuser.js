@@ -1,5 +1,5 @@
-const jwt = require("jsonwebtoken");
-const User = require("../models/UserSchema");
+import jwt from "jsonwebtoken";
+import User from "../models/UserSchema.js";
 const JWT_SECRET = "JWT_$ECRET_$TRING";
 
 const fetchuser = (req, res, next) => {
